@@ -90,6 +90,19 @@ return [
             'prefix' => '',
         ],
 
+        'cleardb_mysql' => [
+            'driver' => 'mysql',
+            'host' => $host,
+            'port' => env('DB_PORT', '3306'),
+            'database' => $database,
+            'username' => $username,
+            'password' => $password,
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ]
     ],
 
     /*
