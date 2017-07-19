@@ -18,7 +18,8 @@ class Cors
         $domains = [
             'http://localhost:8080',
             'http://localhost:5000',
-            'https://countdown-vue.herokuapp.com/'
+            'https://countdown-vue.herokuapp.com/',
+            '*'
         ];
 
         if (isset($request->server()['HTTP_ORIGIN'])) {
