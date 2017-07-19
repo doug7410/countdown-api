@@ -6,20 +6,21 @@ use App\Countdown;
 use App\Image;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ImagesController extends Controller
 {
     public function store(Request $request) {
         $userId = auth()->user()->id;
         $countdownId = $request->input('countdown_id');
-        $image = $request->file('image');
-        $imageName = $image->getClientOriginalName();
-        $uploadedImage =  $image->storeAs("images/$userId/$countdownId", $imageName, 'public');
+        $file = $request->file('image');
+        $imageName = $file->getClientOriginalName();
+        $uploadedImage = Storage::disk('s3')->put("images/$userId/$countdownId", $file, 'public');
 
-        $image = Image::create([
+        Image::create([
             'countdown_id'  => $countdownId,
             'user_id'       => $userId,
-            'path'          => $uploadedImage,
+            'path'          => "https://s3.amazonaws.com/staging.countdown.images/$uploadedImage",
             'name'          => $imageName
         ]);
 
