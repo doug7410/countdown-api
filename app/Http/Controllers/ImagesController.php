@@ -17,14 +17,12 @@ class ImagesController extends Controller
         $imageName = $file->getClientOriginalName();
         $uploadedImage = Storage::disk('s3')->put("images/$userId/$countdownId", $file, 'public');
 
-        Image::create([
+        return Image::create([
             'countdown_id'  => $countdownId,
             'user_id'       => $userId,
             'path'          => "https://s3.amazonaws.com/staging.countdown.images/$uploadedImage",
             'name'          => $imageName
         ]);
-
-        return Countdown::findOrFail($countdownId)->images;
     }
 
     public function show(Request $request, $countdownId) {
